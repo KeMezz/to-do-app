@@ -1,6 +1,7 @@
-import { useRecoilValue } from "recoil";
+import React from "react";
+import { useRecoilState, useRecoilValue } from "recoil";
 import styled from "styled-components";
-import { toDoState } from "../atoms";
+import { categories, categoryNow, toDoSelector } from "../atoms";
 import CreatedList from "./CreatedList";
 import CreateToDo from "./CreateToDo";
 
@@ -16,17 +17,32 @@ const Lists = styled.ul`
   flex-direction: column;
   padding: 16px;
   gap: 8px;
+  h2 {
+    font-weight: 600;
+    padding-bottom: 10px;
+  }
 `;
 
-
 function ToDoApp() {
-  const toDos = useRecoilValue(toDoState);
+  const toDos = useRecoilValue(toDoSelector);
+  const [category, setCategory] = useRecoilState(categoryNow);
+
+  const onInput = (event: React.FormEvent<HTMLSelectElement>) => {
+    setCategory(event.currentTarget.value as categories);
+  };
   return (
     <>
       <Container>
+        <CreateToDo />
         <Lists>
-          <CreateToDo />
-          {toDos.map(item => <CreatedList key={item.id} {...item}></CreatedList>)}
+          <select value={category} onInput={onInput}>
+            <option value={categories.SCHEDULED}>예정됨</option>
+            <option value={categories.DOING}>진행 중</option>
+            <option value={categories.DONE}>완료함</option>
+          </select>
+          {toDos.map((item) => (
+            <CreatedList key={item.id} {...item} />
+          ))}
         </Lists>
       </Container>
     </>
