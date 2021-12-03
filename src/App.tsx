@@ -1,6 +1,7 @@
 import { useRecoilValue } from "recoil";
 import { createGlobalStyle, ThemeProvider } from "styled-components";
 import { theme } from "./atoms";
+import ToDoApp from "./components/ToDoContainer";
 import { darkTheme, lightTheme } from "./theme";
 
 const GlobalStyle = createGlobalStyle`
@@ -63,6 +64,7 @@ function App() {
     <>
       <ThemeProvider theme={isDark? darkTheme : lightTheme}>
         <GlobalStyle />
+		<ToDoApp />
       </ThemeProvider>
     </>
   );
