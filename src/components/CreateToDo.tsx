@@ -1,5 +1,6 @@
+import { useEffect } from "react";
 import { useForm } from "react-hook-form";
-import { useRecoilValue, useSetRecoilState } from "recoil";
+import { useRecoilState, useRecoilValue } from "recoil";
 import styled from "styled-components";
 import { categoryNow, toDoState } from "../atoms";
 
@@ -53,7 +54,7 @@ const AddBtn = styled.button`
 `;
 
 function CreateToDo() {
-  const setToDos = useSetRecoilState(toDoState);
+  const [toDos, setToDos] = useRecoilState(toDoState);
   const selectedCategory = useRecoilValue(categoryNow);
   const { register, handleSubmit, formState, setValue } = useForm<IForm>();
   const onValid = ({ toDo }: IForm) => {
@@ -63,6 +64,9 @@ function CreateToDo() {
     ]);
     setValue("toDo", "");
   };
+  useEffect(() => {
+    localStorage.setItem("toDos", JSON.stringify(toDos));
+  }, [toDos]);
   return (
     <>
       <Title>React To Do App</Title>

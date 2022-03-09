@@ -1,37 +1,39 @@
 import { atom, selector } from "recoil";
 
 export const theme = atom({
-    key: "isDark",
-    default: false,
-})
+  key: "isDark",
+  default: false,
+});
 
 export enum categories {
-    "SCHEDULED" = "SCHEDULED",
-    "DOING" = "DOING",
-    "DONE" = "DONE"
+  "SCHEDULED" = "SCHEDULED",
+  "DOING" = "DOING",
+  "DONE" = "DONE",
 }
 
 export interface IToDo {
-    text: string,
-    id: number,
-    category: categories,
+  text: string;
+  id: number;
+  category: categories;
 }
 
 export const categoryNow = atom<categories>({
-    key: "categoryNow",
-    default: categories.SCHEDULED
-})
+  key: "categoryNow",
+  default: categories.SCHEDULED,
+});
 
 export const toDoState = atom<IToDo[]>({
-    key: "toDo",
-    default: [],
-})
+  key: "toDo",
+  default: localStorage.getItem("toDos")
+    ? JSON.parse(localStorage.getItem("toDos") as any)
+    : [],
+});
 
 export const toDoSelector = selector({
-    key: "toDoSelector",
-    get: ({get}) => {
-        const toDos = get(toDoState);
-        const category = get(categoryNow);
-        return toDos.filter(item => item.category === category)
-    }
-})
+  key: "toDoSelector",
+  get: ({ get }) => {
+    const toDos = get(toDoState);
+    const category = get(categoryNow);
+    return toDos.filter((item) => item.category === category);
+  },
+});

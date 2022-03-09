@@ -18,20 +18,30 @@ const Lists = styled.ul`
   display: flex;
   flex-direction: column;
   padding: 16px;
-  gap: 8px;
+  gap: 12px;
   h2 {
     font-weight: 600;
     padding-bottom: 10px;
   }
 `;
 
-const Select = styled.select`
-  padding: 12px 22px;
-  border-radius: 20px;
-  appearance: none;
-  filter: drop-shadow(0 0 4px rgba(0, 0, 0, 0.3));
+const SelectBox = styled.div`
+  display: flex;
+  position: relative;
   margin-bottom: 20px;
-  outline: none;
+  select {
+    width: 100%;
+    padding: 12px 22px;
+    border-radius: 20px;
+    appearance: none;
+    filter: drop-shadow(0 0 4px rgba(0, 0, 0, 0.3));
+    outline: none;
+  }
+  svg {
+    position: absolute;
+    right: 20px;
+    top: 12px;
+  }
 `;
 
 function ToDoApp() {
@@ -46,11 +56,14 @@ function ToDoApp() {
       <Container>
         <CreateToDo />
         <Lists>
-          <Select value={category} onInput={onInput}>
-            <option value={categories.SCHEDULED}>예정됨</option>
-            <option value={categories.DOING}>진행 중</option>
-            <option value={categories.DONE}>완료함</option>
-          </Select>
+          <SelectBox>
+            <select value={category} onInput={onInput}>
+              <option value={categories.SCHEDULED}>예정됨</option>
+              <option value={categories.DOING}>진행 중</option>
+              <option value={categories.DONE}>완료함</option>
+            </select>
+            <BiCaretDown />
+          </SelectBox>
           {toDos.map((item) => (
             <CreatedList key={item.id} {...item} />
           ))}
