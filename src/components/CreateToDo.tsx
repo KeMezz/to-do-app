@@ -18,11 +18,11 @@ const Form = styled.form`
   padding: 0 16px;
 `;
 const ErrorMeg = styled.h3`
-    font-size: 14px;
-    color: crimson;
-    padding: 14px;
-    font-weight: 400;
-    text-align: center;
+  font-size: 14px;
+  color: crimson;
+  padding: 14px;
+  font-weight: 400;
+  text-align: center;
 `;
 const Input = styled.input`
   height: 50px;
@@ -71,6 +71,7 @@ function CreateToDo() {
         <Input
           {...register("toDo", { required: "할 일을 입력해주세요!" })}
           autoFocus
+          autoComplete="off"
           type="text"
           placeholder="할 일을 입력하세요."
         />

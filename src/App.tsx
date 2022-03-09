@@ -34,6 +34,7 @@ body {
   background-color: ${(props) => props.theme.bgColor};
   font-family: 'Noto Sans KR', sans-serif;
 	line-height: 1;
+	padding: 12px;
 }
 ol, ul {
 	list-style: none;
@@ -59,12 +60,12 @@ a {
 `;
 
 function App() {
-	const isDark = useRecoilValue(theme);
+  const isDark = useRecoilValue(theme);
   return (
     <>
-      <ThemeProvider theme={isDark? darkTheme : lightTheme}>
+      <ThemeProvider theme={isDark ? darkTheme : lightTheme}>
         <GlobalStyle />
-		<ToDoApp />
+        <ToDoApp />
       </ThemeProvider>
     </>
   );
