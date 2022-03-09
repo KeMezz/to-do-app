@@ -25,9 +25,18 @@ const ErrorMeg = styled.h3`
   font-weight: 400;
   text-align: center;
 `;
+const InputBox = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  justify-content: space-between;
+  position: relative;
+`;
 const Input = styled.input`
-  height: 50px;
-  padding: 0 20px;
+  width: 100%;
+  height: 60px;
+  padding-left: 26px;
+  padding-right: 150px;
   font-size: 18px;
   border-radius: 16px;
   border: none;
@@ -43,7 +52,8 @@ const Input = styled.input`
   }
 `;
 const AddBtn = styled.button`
-  margin-top: 16px;
+  position: absolute;
+  right: 10px;
   align-self: center;
   padding: 10px 30px;
   background-color: crimson;
@@ -72,14 +82,16 @@ function CreateToDo() {
       <Title>React To Do App</Title>
       <Form onSubmit={handleSubmit(onValid)}>
         <ErrorMeg>{formState.errors.toDo?.message}</ErrorMeg>
-        <Input
-          {...register("toDo", { required: "할 일을 입력해주세요!" })}
-          autoFocus
-          autoComplete="off"
-          type="text"
-          placeholder="할 일을 입력하세요."
-        />
-        <AddBtn>추가하기</AddBtn>
+        <InputBox>
+          <Input
+            {...register("toDo", { required: "할 일을 입력해주세요" })}
+            autoFocus
+            autoComplete="off"
+            type="text"
+            placeholder="Write To-do..."
+          />
+          <AddBtn>ADD</AddBtn>
+        </InputBox>
       </Form>
     </>
   );

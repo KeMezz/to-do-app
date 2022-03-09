@@ -1,10 +1,10 @@
-import { useRecoilState } from "recoil";
+import { useRecoilState, useRecoilValue } from "recoil";
 import styled from "styled-components";
-import { categories, IToDo, toDoState } from "../atoms";
+import { everyCategories, IToDo, toDoState } from "../atoms";
 
 const List = styled.li`
   background-color: #fff;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.15);
+  border: solid 1px #ccc;
   display: flex;
   align-items: center;
   padding: 12px 20px;
@@ -25,8 +25,9 @@ const List = styled.li`
 
 function CreatedList({ text, id, category }: IToDo) {
   const [toDos, setToDos] = useRecoilState(toDoState);
-  console.log(toDos);
-  const onClick = (clickedCategory: categories) => {
+  const allCats = useRecoilValue(everyCategories);
+
+  const onClick = (clickedCategory: string) => {
     const targetIndex = toDos.findIndex((item) => item.id === id);
     const newToDo: IToDo = { text, id, category: clickedCategory };
     setToDos(() => [
@@ -35,17 +36,17 @@ function CreatedList({ text, id, category }: IToDo) {
       ...toDos.slice(targetIndex + 1),
     ]);
   };
+
   return (
     <List>
       <span>{text}</span>
-      {category !== categories.SCHEDULED && (
-        <button onClick={() => onClick(categories.SCHEDULED)}>예정됨</button>
-      )}
-      {category !== categories.DOING && (
-        <button onClick={() => onClick(categories.DOING)}>진행중</button>
-      )}
-      {category !== categories.DONE && (
-        <button onClick={() => onClick(categories.DONE)}>완료함</button>
+      {allCats.map(
+        (item: string, index: number) =>
+          category !== item && (
+            <button key={index} onClick={() => onClick(item)}>
+              {item}
+            </button>
+          )
       )}
     </List>
   );

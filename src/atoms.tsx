@@ -5,21 +5,24 @@ export const theme = atom({
   default: false,
 });
 
-export enum categories {
-  "SCHEDULED" = "SCHEDULED",
-  "DOING" = "DOING",
-  "DONE" = "DONE",
-}
+export const everyCategories = atom({
+  key: "everyCategories",
+  default: localStorage.getItem("categories")
+    ? JSON.parse(localStorage.getItem("categories") as any)
+    : ["SCHEDULED", "DOING", "DONE"],
+});
 
 export interface IToDo {
   text: string;
   id: number;
-  category: categories;
+  category: string;
 }
 
-export const categoryNow = atom<categories>({
+export const categoryNow = atom<string>({
   key: "categoryNow",
-  default: categories.SCHEDULED,
+  default: localStorage.getItem("categoryNow")
+    ? JSON.parse(localStorage.getItem("categoryNow") as any)
+    : "SCHEDULED",
 });
 
 export const toDoState = atom<IToDo[]>({
